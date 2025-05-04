@@ -1,4 +1,8 @@
 import os
+<<<<<<< HEAD
+=======
+import google.generativeai as genai
+>>>>>>> refs/remotes/origin/main
 from openai import OpenAI
 from utils.logger import get_logger
 
@@ -19,10 +23,14 @@ class LLMService:
         self.user = model_config.get("user", None)
 
         if self.provider == "openai":
+<<<<<<< HEAD
             api_key = os.getenv("OPENAI_API_KEY")
             if not api_key:
                 raise ValueError("OPENAI_API_KEY environment variable not set.")
             self.client = OpenAI(api_key=api_key)
+=======
+            self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+>>>>>>> refs/remotes/origin/main
         elif self.provider == "gemini":
             gemini_key = os.getenv("GEMINI_API_NEOTEK_KEY")
             if not gemini_key:
@@ -35,6 +43,7 @@ class LLMService:
             raise ValueError(f"Unsupported provider: {self.provider}")
 
     def chat(self, messages):
+<<<<<<< HEAD
         response = self.client.chat.completions.create(
             model=self.model,
             messages=messages,
@@ -53,3 +62,24 @@ class LLMService:
         logger.info(f"{self.provider.capitalize()} usage: prompt={usage.prompt_tokens}, "
                     f"completion={usage.completion_tokens}, total={usage.total_tokens}")
         return response
+=======
+        if self.provider == "openai":
+            response = self.client.chat.completions.create(
+                model=self.model,
+                messages=messages,
+                temperature=self.temperature,
+                max_tokens=self.max_tokens
+            )
+            usage = response.usage
+            logger.info(f"OpenAI usage: prompt={usage.prompt_tokens}, "
+                        f"completion={usage.completion_tokens}, total={usage.total_tokens}")
+            return response.choices[0].message.content
+        elif self.provider == "gemini":
+            prompt_text = "\n".join([f"{m['role'].capitalize()}: {m['content']}" for m in messages])
+            response = self.gemini_model.generate_content(prompt_text)
+            token_usage = response._raw_response.usage_metadata
+            logger.info(f"Gemini usage: prompt={token_usage.prompt_token_count}, "
+                        f"completion={token_usage.candidates_token_count}, "
+                        f"total={token_usage.total_token_count}")
+            return response.text
+>>>>>>> refs/remotes/origin/main

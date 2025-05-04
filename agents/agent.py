@@ -32,11 +32,24 @@ class Agent(BaseAgent):
     def run(self, input_path, output_path, previous_outputs=None):
         self.logger.info(f"Running agent {self.name}...")
 
+<<<<<<< HEAD
         system_prompt_path = Path(f"prompts/{self.name}/system.txt")
         system_prompt = system_prompt_path.read_text() if system_prompt_path.exists() else "You are a helpful assistant."
 
         user_template_path = Path(f"prompts/{self.name}/user_template.txt")
         context_vars = previous_outputs if previous_outputs else {}
+=======
+        # Load system prompt
+        system_prompt_path = Path(f"prompts/{self.name}/system.txt")
+        system_prompt = system_prompt_path.read_text() if system_prompt_path.exists() else "You are a helpful assistant."
+
+        # Prepare user prompt
+        user_template_path = Path(f"prompts/{self.name}/user_template.txt")
+        context_vars = {}
+        if previous_outputs:
+            for idx, val in enumerate(previous_outputs):
+                context_vars[f"previous_{idx+1}"] = val.strip()
+>>>>>>> refs/remotes/origin/main
         user_prompt = self.load_user_prompt_template(user_template_path, context_vars)
 
         messages = [
