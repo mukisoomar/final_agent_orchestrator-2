@@ -97,3 +97,90 @@
 2025-05-03 19:49:22 [INFO] OpenAI usage: prompt=159, completion=37, total=196
 2025-05-03 19:49:22 [INFO] Writing output to output/sample2/agent_generate_java_code.txt
 2025-05-03 19:49:22 [INFO] Finished executing agent_generate_java_code
+2025-05-04 17:52:23 [INFO] Starting orchestration run
+2025-05-04 17:54:28 [INFO] Starting orchestration run
+2025-05-04 17:54:28 [INFO] Initializing agent: agent_document_tal_code
+2025-05-04 17:54:28 [INFO] Initializing Agent: agent_document_tal_code
+2025-05-04 17:54:28 [INFO] Loading model config for agent_document_tal_code
+2025-05-04 17:54:28 [INFO] Initializing agent: agent_generate_tal_tech_specs
+2025-05-04 17:54:28 [INFO] Initializing Agent: agent_generate_tal_tech_specs
+2025-05-04 17:54:28 [INFO] Loading model config for agent_generate_tal_tech_specs
+2025-05-04 17:54:28 [INFO] 
+=== Processing input file: __init__.py ===
+2025-05-04 17:54:28 [INFO] Starting flow from agent: agent_document_tal_code
+2025-05-04 17:54:28 [INFO] Executing agent_document_tal_code on repository/__init__.py...
+2025-05-04 17:54:28 [INFO] Running agent agent_document_tal_code...
+2025-05-04 17:54:28 [INFO] Loading user prompt template: prompts/agent_document_tal_code/user_template.txt
+2025-05-04 17:54:28 [ERROR] Missing placeholder key: 'tal_code'
+2025-05-04 17:54:28 [INFO] Sending request to LLM for agent_document_tal_code
+2025-05-04 17:54:29 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 400 Bad Request"
+2025-05-04 17:54:29 [ERROR] agent_document_tal_code LLM call failed: Error code: 400 - [{'error': {'code': 400, 'message': 'Invalid JSON payload received. Unknown name "frequency_penalty": Cannot find field.\nInvalid JSON payload received. Unknown name "logit_bias": Cannot find field.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.BadRequest', 'fieldViolations': [{'description': 'Invalid JSON payload received. Unknown name "frequency_penalty": Cannot find field.'}, {'description': 'Invalid JSON payload received. Unknown name "logit_bias": Cannot find field.'}]}]}}]
+2025-05-04 17:54:29 [INFO] Writing output to output/__init__/agent_document_tal_code.txt
+2025-05-04 17:54:29 [INFO] Executing agent_generate_tal_tech_specs on output/__init__/agent_document_tal_code.txt...
+2025-05-04 17:54:29 [INFO] Running agent agent_generate_tal_tech_specs...
+2025-05-04 17:54:29 [INFO] Loading user prompt template: prompts/agent_generate_tal_tech_specs/user_template.txt
+2025-05-04 17:54:29 [INFO] Sending request to LLM for agent_generate_tal_tech_specs
+2025-05-04 17:54:29 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 400 Bad Request"
+2025-05-04 17:54:29 [ERROR] agent_generate_tal_tech_specs LLM call failed: Error code: 400 - [{'error': {'code': 400, 'message': 'Invalid JSON payload received. Unknown name "frequency_penalty": Cannot find field.\nInvalid JSON payload received. Unknown name "logit_bias": Cannot find field.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.BadRequest', 'fieldViolations': [{'description': 'Invalid JSON payload received. Unknown name "frequency_penalty": Cannot find field.'}, {'description': 'Invalid JSON payload received. Unknown name "logit_bias": Cannot find field.'}]}]}}]
+2025-05-04 17:54:29 [INFO] Writing output to output/__init__/agent_generate_tal_tech_specs.txt
+2025-05-04 17:54:29 [INFO] 
+=== Processing input file: sample2.tal ===
+2025-05-04 17:54:29 [INFO] Starting flow from agent: agent_document_tal_code
+2025-05-04 17:54:29 [INFO] Executing agent_document_tal_code on repository/sample2.tal...
+2025-05-04 17:54:29 [INFO] Running agent agent_document_tal_code...
+2025-05-04 17:54:29 [INFO] Loading user prompt template: prompts/agent_document_tal_code/user_template.txt
+2025-05-04 17:54:29 [ERROR] Missing placeholder key: 'tal_code'
+2025-05-04 17:54:29 [INFO] Sending request to LLM for agent_document_tal_code
+2025-05-04 17:54:29 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 400 Bad Request"
+2025-05-04 17:54:29 [ERROR] agent_document_tal_code LLM call failed: Error code: 400 - [{'error': {'code': 400, 'message': 'Invalid JSON payload received. Unknown name "frequency_penalty": Cannot find field.\nInvalid JSON payload received. Unknown name "logit_bias": Cannot find field.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.BadRequest', 'fieldViolations': [{'description': 'Invalid JSON payload received. Unknown name "frequency_penalty": Cannot find field.'}, {'description': 'Invalid JSON payload received. Unknown name "logit_bias": Cannot find field.'}]}]}}]
+2025-05-04 17:54:29 [INFO] Writing output to output/sample2/agent_document_tal_code.txt
+2025-05-04 17:54:29 [INFO] Executing agent_generate_tal_tech_specs on output/sample2/agent_document_tal_code.txt...
+2025-05-04 17:54:29 [INFO] Running agent agent_generate_tal_tech_specs...
+2025-05-04 17:54:29 [INFO] Loading user prompt template: prompts/agent_generate_tal_tech_specs/user_template.txt
+2025-05-04 17:54:29 [INFO] Sending request to LLM for agent_generate_tal_tech_specs
+2025-05-04 17:54:29 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 400 Bad Request"
+2025-05-04 17:54:29 [ERROR] agent_generate_tal_tech_specs LLM call failed: Error code: 400 - [{'error': {'code': 400, 'message': 'Invalid JSON payload received. Unknown name "frequency_penalty": Cannot find field.\nInvalid JSON payload received. Unknown name "logit_bias": Cannot find field.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.BadRequest', 'fieldViolations': [{'description': 'Invalid JSON payload received. Unknown name "frequency_penalty": Cannot find field.'}, {'description': 'Invalid JSON payload received. Unknown name "logit_bias": Cannot find field.'}]}]}}]
+2025-05-04 17:54:29 [INFO] Writing output to output/sample2/agent_generate_tal_tech_specs.txt
+2025-05-04 17:55:56 [INFO] Starting orchestration run
+2025-05-04 17:55:57 [INFO] Initializing agent: agent_document_tal_code
+2025-05-04 17:55:57 [INFO] Initializing Agent: agent_document_tal_code
+2025-05-04 17:55:57 [INFO] Loading model config for agent_document_tal_code
+2025-05-04 17:55:57 [INFO] Initializing agent: agent_generate_tal_tech_specs
+2025-05-04 17:55:57 [INFO] Initializing Agent: agent_generate_tal_tech_specs
+2025-05-04 17:55:57 [INFO] Loading model config for agent_generate_tal_tech_specs
+2025-05-04 17:55:57 [INFO] 
+=== Processing input file: __init__.py ===
+2025-05-04 17:55:57 [INFO] Starting flow from agent: agent_document_tal_code
+2025-05-04 17:55:57 [INFO] Executing agent_document_tal_code on repository/__init__.py...
+2025-05-04 17:55:57 [INFO] Running agent agent_document_tal_code...
+2025-05-04 17:55:57 [INFO] Loading user prompt template: prompts/agent_document_tal_code/user_template.txt
+2025-05-04 17:55:57 [ERROR] Missing placeholder key: 'tal_code'
+2025-05-04 17:55:57 [INFO] Sending request to LLM for agent_document_tal_code
+2025-05-04 17:55:57 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 400 Bad Request"
+2025-05-04 17:55:57 [ERROR] agent_document_tal_code LLM call failed: Error code: 400 - [{'error': {'code': 400, 'message': 'Invalid JSON payload received. Unknown name "frequency_penalty": Cannot find field.\nInvalid JSON payload received. Unknown name "logit_bias": Cannot find field.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.BadRequest', 'fieldViolations': [{'description': 'Invalid JSON payload received. Unknown name "frequency_penalty": Cannot find field.'}, {'description': 'Invalid JSON payload received. Unknown name "logit_bias": Cannot find field.'}]}]}}]
+2025-05-04 17:55:57 [INFO] Writing output to output/__init__/agent_document_tal_code.txt
+2025-05-04 17:55:57 [INFO] Executing agent_generate_tal_tech_specs on output/__init__/agent_document_tal_code.txt...
+2025-05-04 17:55:57 [INFO] Running agent agent_generate_tal_tech_specs...
+2025-05-04 17:55:57 [INFO] Loading user prompt template: prompts/agent_generate_tal_tech_specs/user_template.txt
+2025-05-04 17:55:57 [INFO] Sending request to LLM for agent_generate_tal_tech_specs
+2025-05-04 17:55:57 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 400 Bad Request"
+2025-05-04 17:55:57 [ERROR] agent_generate_tal_tech_specs LLM call failed: Error code: 400 - [{'error': {'code': 400, 'message': 'Invalid JSON payload received. Unknown name "frequency_penalty": Cannot find field.\nInvalid JSON payload received. Unknown name "logit_bias": Cannot find field.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.BadRequest', 'fieldViolations': [{'description': 'Invalid JSON payload received. Unknown name "frequency_penalty": Cannot find field.'}, {'description': 'Invalid JSON payload received. Unknown name "logit_bias": Cannot find field.'}]}]}}]
+2025-05-04 17:55:57 [INFO] Writing output to output/__init__/agent_generate_tal_tech_specs.txt
+2025-05-04 17:55:57 [INFO] 
+=== Processing input file: sample2.tal ===
+2025-05-04 17:55:57 [INFO] Starting flow from agent: agent_document_tal_code
+2025-05-04 17:55:57 [INFO] Executing agent_document_tal_code on repository/sample2.tal...
+2025-05-04 17:55:57 [INFO] Running agent agent_document_tal_code...
+2025-05-04 17:55:57 [INFO] Loading user prompt template: prompts/agent_document_tal_code/user_template.txt
+2025-05-04 17:55:57 [ERROR] Missing placeholder key: 'tal_code'
+2025-05-04 17:55:57 [INFO] Sending request to LLM for agent_document_tal_code
+2025-05-04 17:55:57 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 400 Bad Request"
+2025-05-04 17:55:57 [ERROR] agent_document_tal_code LLM call failed: Error code: 400 - [{'error': {'code': 400, 'message': 'Invalid JSON payload received. Unknown name "frequency_penalty": Cannot find field.\nInvalid JSON payload received. Unknown name "logit_bias": Cannot find field.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.BadRequest', 'fieldViolations': [{'description': 'Invalid JSON payload received. Unknown name "frequency_penalty": Cannot find field.'}, {'description': 'Invalid JSON payload received. Unknown name "logit_bias": Cannot find field.'}]}]}}]
+2025-05-04 17:55:57 [INFO] Writing output to output/sample2/agent_document_tal_code.txt
+2025-05-04 17:55:57 [INFO] Executing agent_generate_tal_tech_specs on output/sample2/agent_document_tal_code.txt...
+2025-05-04 17:55:57 [INFO] Running agent agent_generate_tal_tech_specs...
+2025-05-04 17:55:57 [INFO] Loading user prompt template: prompts/agent_generate_tal_tech_specs/user_template.txt
+2025-05-04 17:55:57 [INFO] Sending request to LLM for agent_generate_tal_tech_specs
+2025-05-04 17:55:57 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 400 Bad Request"
+2025-05-04 17:55:57 [ERROR] agent_generate_tal_tech_specs LLM call failed: Error code: 400 - [{'error': {'code': 400, 'message': 'Invalid JSON payload received. Unknown name "frequency_penalty": Cannot find field.\nInvalid JSON payload received. Unknown name "logit_bias": Cannot find field.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.BadRequest', 'fieldViolations': [{'description': 'Invalid JSON payload received. Unknown name "frequency_penalty": Cannot find field.'}, {'description': 'Invalid JSON payload received. Unknown name "logit_bias": Cannot find field.'}]}]}}]
+2025-05-04 17:55:57 [INFO] Writing output to output/sample2/agent_generate_tal_tech_specs.txt

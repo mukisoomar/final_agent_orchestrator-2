@@ -13,6 +13,8 @@ class LLMService:
         self.n = model_config.get("n", 1)
         self.stop = model_config.get("stop", None)
         self.max_tokens = model_config.get("max_tokens", 1024)
+
+        # Only used with OpenAI models
         self.presence_penalty = model_config.get("presence_penalty", 0.0)
         self.frequency_penalty = model_config.get("frequency_penalty", 0.0)
         self.logit_bias = model_config.get("logit_bias", None)
@@ -35,21 +37,31 @@ class LLMService:
             raise ValueError(f"Unsupported provider: {self.provider}")
 
     def chat(self, messages):
-        response = self.client.chat.completions.create(
-            model=self.model,
-            messages=messages,
-            temperature=self.temperature,
-            top_p=self.top_p,
-            n=self.n,
-            stop=self.stop,
-            max_tokens=self.max_tokens,
-            presence_penalty=self.presence_penalty,
-            frequency_penalty=self.frequency_penalty,
-            logit_bias=self.logit_bias,
-            user=self.user
-        )
+        kwargs = {
+            "model": self.model,
+            "messages": messages,
+            "temperature": self.temperature,
+            "top_p": self.top_p,
+            "n": self.n,
+            "stop": self.stop,
+            "max_tokens": self.max_tokens
+        }
 
-        usage = response.usage
-        logger.info(f"{self.provider.capitalize()} usage: prompt={usage.prompt_tokens}, "
-                    f"completion={usage.completion_tokens}, total={usage.total_tokens}")
+        # Add OpenAI-specific parameters only for OpenAI
+        if self.provider == "openai":
+            kwargs.update({
+                "presence_penalty": self.presence_penalty,
+                "frequency_penalty": self.frequency_penalty,
+                "logit_bias": self.logit_bias,
+                "user": self.user
+            })
+
+        response = self.client.chat.completions.create(**kwargs)
+
+        usage = getattr(response, "usage", None)
+        if usage:
+            logger.info(
+                f"{self.provider.capitalize()} usage: prompt={usage.prompt_tokens}, "
+                f"completion={usage.completion_tokens}, total={usage.total_tokens}"
+            )
         return response
