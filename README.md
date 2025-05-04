@@ -115,3 +115,98 @@ Ensure you have [an OpenAI account](https://platform.openai.com/) and billing en
 
 You can also switch to Gemini API integration if needed by customizing the `Agent.run()` method.
 
+
+
+---
+
+## ⚙️ Model Configuration
+
+### Global defaults
+
+You can configure global model parameters in:
+
+```
+config/default_model_config.json
+```
+
+Example:
+```json
+{
+  "model": "gpt-4",
+  "temperature": 0.3,
+  "max_tokens": 1024
+}
+```
+
+### Per-agent overrides
+
+Customize specific agents in:
+
+```
+config/agent_config.json
+```
+
+Example:
+```json
+{
+  "agent_generate_brd": {
+    "temperature": 0.2
+  },
+  "agent_generate_java_code": {
+    "max_tokens": 2048
+  }
+}
+```
+
+Each agent will merge its config with the defaults and call OpenAI using its own settings.
+
+
+---
+
+## 🧠 OpenAI & Gemini Support
+
+You can run the agent framework with either:
+
+- `OpenAI` (ChatGPT)
+- `Gemini` (Google)
+
+### 🔧 To configure:
+
+In `config/default_model_config.json` or per-agent in `agent_config.json`, specify:
+
+```json
+{
+  "provider": "openai",     // or "gemini"
+  "model": "gpt-4",         // or "gemini-pro"
+  "temperature": 0.3,
+  "max_tokens": 1024
+}
+```
+
+---
+
+## 🔐 API Key Setup
+
+Add a `.env` file with one or both of:
+
+```
+OPENAI_API_KEY=your_openai_key
+GEMINI_API_KEY=your_gemini_key
+```
+
+---
+
+## 📊 Token Usage Logging
+
+Each agent logs:
+- Prompt token count
+- Completion token count
+- Total token usage
+
+Log files are written to:
+
+```
+logs/agent.log
+```
+
+This helps monitor cost and efficiency of each LLM call.
