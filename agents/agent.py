@@ -18,23 +18,36 @@ class Agent(BaseAgent):
             overrides = json.load(f).get(agent_name, {})
         return {**default_config, **overrides}
 
-    def run(self, input_path, output_path, previous_output=None):
-        self.logger.info(f"Running agent {self.name}...")
-        prompt_path = Path(self.config.get("prompt_path", "prompts/default.txt"))
-        self.logger.info(f"Loading system prompt from {prompt_path}")
-        system_prompt = prompt_path.read_text() if prompt_path.exists() else "You are a helpful assistant."
+    def load_user_prompt_template(self, template_path, context_vars):
+        self.logger.info(f"Loading user prompt template: {template_path}")
+        if not Path(template_path).exists():
+            return ""
+        template = Path(template_path).read_text()
+        try:
+            return template.format(**context_vars)
+        except KeyError as e:
+            self.logger.error(f"Missing placeholder key: {e}")
+            return template
 
-        self.logger.info(f"Reading input from {input_path}")
-        with open(input_path, 'r') as f:
-            user_input = f.read()
+    def run(self, input_path, output_path, previous_outputs=None):
+        self.logger.info(f"Running agent {self.name}...")
+
+        # Load system prompt
+        system_prompt_path = Path(f"prompts/{self.name}/system.txt")
+        system_prompt = system_prompt_path.read_text() if system_prompt_path.exists() else "You are a helpful assistant."
+
+        # Prepare user prompt
+        user_template_path = Path(f"prompts/{self.name}/user_template.txt")
+        context_vars = {}
+        if previous_outputs:
+            for idx, val in enumerate(previous_outputs):
+                context_vars[f"previous_{idx+1}"] = val.strip()
+        user_prompt = self.load_user_prompt_template(user_template_path, context_vars)
 
         messages = [
             {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_input}
+            {"role": "user", "content": user_prompt}
         ]
-        if previous_output:
-            messages.append({"role": "assistant", "content": previous_output})
-            self.logger.info("Previous output included in message chain")
 
         try:
             self.logger.info(f"Sending request to LLM for {self.name}")

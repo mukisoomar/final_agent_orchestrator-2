@@ -1,6 +1,6 @@
 import os
-import openai
 import google.generativeai as genai
+from openai import OpenAI
 from utils.logger import get_logger
 
 logger = get_logger("LLM")
@@ -13,7 +13,7 @@ class LLMService:
         self.max_tokens = model_config.get("max_tokens", 1024)
 
         if self.provider == "openai":
-            openai.api_key = os.getenv("OPENAI_API_KEY")
+            self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         elif self.provider == "gemini":
             genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
             self.gemini_model = genai.GenerativeModel(self.model)
@@ -22,16 +22,16 @@ class LLMService:
 
     def chat(self, messages):
         if self.provider == "openai":
-            response = openai.ChatCompletion.create(
+            response = self.client.chat.completions.create(
                 model=self.model,
                 messages=messages,
                 temperature=self.temperature,
                 max_tokens=self.max_tokens
             )
-            usage = response["usage"]
-            logger.info(f"OpenAI usage: prompt={usage['prompt_tokens']}, "
-                        f"completion={usage['completion_tokens']}, total={usage['total_tokens']}")
-            return response["choices"][0]["message"]["content"]
+            usage = response.usage
+            logger.info(f"OpenAI usage: prompt={usage.prompt_tokens}, "
+                        f"completion={usage.completion_tokens}, total={usage.total_tokens}")
+            return response.choices[0].message.content
         elif self.provider == "gemini":
             prompt_text = "\n".join([f"{m['role'].capitalize()}: {m['content']}" for m in messages])
             response = self.gemini_model.generate_content(prompt_text)
