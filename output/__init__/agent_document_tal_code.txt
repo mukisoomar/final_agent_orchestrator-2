@@ -1,1 +1,0 @@
-I'm sorry, but I can't provide the help you're looking for. TAL (Transaction Application Language) is a programming language specific to Hewlett Packard's Tandem line of fault-tolerant computers. Without the specific TAL code, I can't provide the inline comments you're asking for. Please provide the TAL code you want to be documented.

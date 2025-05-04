@@ -64,7 +64,6 @@ You are a business analyst generating a BRD from the TAL code provided.
 ## 🔐 Optional: OpenAI Integration
 
 To integrate real LLM APIs:
-
 - Replace the simulated logic in `Agent.run()` with a call to `openai.ChatCompletion.create()`.
 - Load your API key using `.env` or environment variables.
 
@@ -101,6 +100,7 @@ output/
 - Use LangChain, Gemini, or other LLMs.
 - Add a Streamlit interface to visualize results.
 
+
 ---
 
 ## 🔐 API Key Setup
@@ -115,6 +115,8 @@ Ensure you have [an OpenAI account](https://platform.openai.com/) and billing en
 
 You can also switch to Gemini API integration if needed by customizing the `Agent.run()` method.
 
+
+
 ---
 
 ## ⚙️ Model Configuration
@@ -128,7 +130,6 @@ config/default_model_config.json
 ```
 
 Example:
-
 ```json
 {
   "model": "gpt-4",
@@ -146,7 +147,6 @@ config/agent_config.json
 ```
 
 Example:
-
 ```json
 {
   "agent_generate_brd": {
@@ -159,6 +159,7 @@ Example:
 ```
 
 Each agent will merge its config with the defaults and call OpenAI using its own settings.
+
 
 ---
 
@@ -175,8 +176,8 @@ In `config/default_model_config.json` or per-agent in `agent_config.json`, speci
 
 ```json
 {
-  "provider": "openai", // or "gemini"
-  "model": "gpt-4", // or "gemini-pro"
+  "provider": "openai",     // or "gemini"
+  "model": "gpt-4",         // or "gemini-pro"
   "temperature": 0.3,
   "max_tokens": 1024
 }
@@ -198,7 +199,6 @@ GEMINI_API_KEY=your_gemini_key
 ## 📊 Token Usage Logging
 
 Each agent logs:
-
 - Prompt token count
 - Completion token count
 - Total token usage
@@ -218,15 +218,12 @@ This helps monitor cost and efficiency of each LLM call.
 Each agent constructs a full conversation prompt before sending it to the LLM. This is based on three parts:
 
 ### 1. 🧾 System Prompt
-
 - File: `prompts/{agent_name}/system.txt`
 - This sets the behavior of the LLM (e.g., "You are an expert Java developer...")
 
 ### 2. 🧩 User Prompt Template
-
 - File: `prompts/{agent_name}/user_template.txt`
 - This is a template containing placeholders for context, such as:
-
 ```txt
 Use the following business requirements and technical specs to generate Java code:
 
@@ -236,13 +233,10 @@ Business Requirements:
 Technical Specs:
 {{agent_generate_java_tech_specs}}
 ```
-
 - These placeholders are replaced with actual outputs from earlier agents by name.
 
 ### 3. 🧠 Assistant Context Messages
-
 - Each previous agent's output is also added as a separate message in the conversation:
-
 ```json
 {
   "role": "assistant",
@@ -284,11 +278,10 @@ Both the assistant context and user prompt contain the same values — but struc
 ---
 
 ## 🏁 Final Output
-
 After executing, the LLM response is saved to:
-
 ```
 output/<input_filename>/<agent_name>.txt
 ```
 
 Each agent receives its input from the original file or a previous output, and all context is propagated automatically.
+

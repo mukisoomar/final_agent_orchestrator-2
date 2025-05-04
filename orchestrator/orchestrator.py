@@ -36,11 +36,7 @@ def run_orchestration(repo_path=None, output_base_path=None):
             logger.info(f"Executing {agent_name} on {input_path}...")
             agent = agents[agent_name]
             output_path = output_subfolder / f"{agent_name}.txt"
-<<<<<<< HEAD
             previous_outputs = {p: output_map[p] for p in previous_agents if p in output_map}
-=======
-            previous_outputs = [output_map[p] for p in previous_agents if p in output_map]
->>>>>>> refs/remotes/origin/main
             agent.run(input_path, output_path, previous_outputs)
             with open(output_path, 'r') as f:
                 current_output = f.read()
