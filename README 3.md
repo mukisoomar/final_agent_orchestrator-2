@@ -301,3 +301,58 @@ Technical Specifications:
 ```
 
 These values are auto-filled from prior agent outputs in the pipeline.
+
+---
+
+## 📄 Example: User Template with Previous Agent Outputs
+
+Let’s assume the following agent execution flow from `config/flow.json`:
+
+```json
+{
+  "agent_document_tal_code": ["agent_generate_brd"],
+  "agent_generate_brd": ["agent_generate_java_tech_specs"],
+  "agent_generate_java_tech_specs": ["agent_generate_java_code"],
+  "agent_generate_java_code": []
+}
+```
+
+In this example:
+
+- `agent_generate_java_code` runs last
+- It receives output from:
+  - `agent_generate_java_tech_specs` (as `{{previous_1}}`)
+  - `agent_generate_brd` (as `{{previous_2}}`)
+  - `agent_document_tal_code` (as `{{previous_3}}`)
+
+Each previous output is written to:
+
+```
+output/<file_basename>/
+├── agent_document_tal_code.txt
+├── agent_generate_brd.txt
+├── agent_generate_java_tech_specs.txt
+└── agent_generate_java_code.txt  ← final output
+```
+
+---
+
+### 📁 Template: `prompts/agent_generate_java_code/user_template.txt`
+
+```txt
+Generate the Java implementation using the following inputs:
+
+Business Requirements:
+{{previous_2}}
+
+Technical Specifications:
+{{previous_1}}
+
+Original Documented Code:
+{{previous_3}}
+```
+
+- `{{previous_1}}` is the immediate previous agent in the flow
+- Earlier agents are passed in order of execution history
+
+You can include only the placeholders you need. They will be substituted with actual outputs at runtime.

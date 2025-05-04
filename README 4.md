@@ -301,3 +301,51 @@ Technical Specifications:
 ```
 
 These values are auto-filled from prior agent outputs in the pipeline.
+
+---
+
+
+---
+
+## 📄 Example: User Template with Previous Agent Outputs
+
+Let’s assume the following agent execution flow from `config/flow.json`:
+
+```json
+{
+  "agent_document_tal_code": ["agent_generate_brd"],
+  "agent_generate_brd": ["agent_generate_java_tech_specs"],
+  "agent_generate_java_tech_specs": ["agent_generate_java_code"],
+  "agent_generate_java_code": []
+}
+```
+
+In this example, the final agent `agent_generate_java_code` can use outputs from any previous agents directly in its user template.
+
+---
+
+### 📁 Template: `prompts/agent_generate_java_code/user_template.txt`
+
+```txt
+Generate the Java implementation using the following inputs:
+
+Business Requirements:
+{{agent_generate_brd}}
+
+Technical Specifications:
+{{agent_generate_java_tech_specs}}
+
+Original Documented Code:
+{{agent_document_tal_code}}
+```
+
+Each placeholder refers to the actual output written by the corresponding agent:
+```
+output/<file_basename>/
+├── agent_document_tal_code.txt
+├── agent_generate_brd.txt
+├── agent_generate_java_tech_specs.txt
+└── agent_generate_java_code.txt
+```
+
+These values are substituted at runtime from previous agent results.
