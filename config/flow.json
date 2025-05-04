@@ -1,6 +1,12 @@
 {
-  "agent_document_tal_code": ["agent_generate_brd"],
-  "agent_generate_brd": ["agent_generate_java_tech_specs"],
-  "agent_generate_java_tech_specs": ["agent_generate_java_code"],
+  "agent_document_tal_code": [
+    "agent_generate_brd"
+  ],
+  "agent_generate_brd": [
+    "agent_generate_java_tech_specs"
+  ],
+  "agent_generate_java_tech_specs": [
+    "agent_generate_java_code"
+  ],
   "agent_generate_java_code": []
 }
