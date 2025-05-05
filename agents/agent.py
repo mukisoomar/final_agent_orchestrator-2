@@ -1,3 +1,4 @@
+import re
 from agents.base_agent import BaseAgent
 from pathlib import Path
 import json
@@ -29,35 +30,42 @@ class Agent(BaseAgent):
             self.logger.error(f"Missing placeholder key: {e}")
             return template
 
+    def extract_code_block(self, text):
+        self.logger.info("Extracting block between ```Agent Response Start``` and ```Agent Response End```")
+        match = re.search(r"```Agent Response Start```\n(.*?)```Agent Response End```", text, re.DOTALL)
+        if not match:
+            raise ValueError("Expected block not found between 'Agent Response Start' and 'Agent Response End'.")
+        return match.group(1).strip()
+
     def run(self, input_path, output_path, previous_outputs=None):
         self.logger.info(f"Running agent {self.name}...")
 
-        # Load system prompt
-        system_prompt_path = Path(f"prompts/{self.name}/system.txt")
-        system_prompt = system_prompt_path.read_text() if system_prompt_path.exists() else "You are a helpful assistant."
-
-        # Prepare user prompt
-        user_template_path = Path(f"prompts/{self.name}/user_template.txt")
-        context_vars = previous_outputs if previous_outputs else {}
-        user_prompt = self.load_user_prompt_template(user_template_path, context_vars)
-
-        # Assemble messages
-        messages = [{"role": "system", "content": system_prompt}]
-        if previous_outputs:
-            for agent_name, output in previous_outputs.items():
-                messages.append({
-                    "role": "assistant",
-                    "content": f"[Context from {agent_name}]:\n{output.strip()}"
-                })
-        messages.append({"role": "user", "content": user_prompt})
-
         try:
-            self.logger.info(f"Sending request to LLM for {self.name}")
-            output = self.llm.chat(messages)
-        except Exception as e:
-            self.logger.error(f"{self.name} LLM call failed: {e}")
-            output = f"[ERROR from {self.name}: {str(e)}]"
+            system_prompt_path = Path(f"prompts/{self.name}/system.txt")
+            system_prompt = system_prompt_path.read_text() if system_prompt_path.exists() else "You are a helpful assistant."
 
-        self.logger.info(f"Writing output to {output_path}")
-        with open(output_path, 'w') as f:
-            f.write(output)
+            user_template_path = Path(f"prompts/{self.name}/user_template.txt")
+            context_vars = previous_outputs if previous_outputs else {}
+            user_prompt = self.load_user_prompt_template(user_template_path, context_vars)
+
+            messages = [{"role": "system", "content": system_prompt}]
+            if previous_outputs:
+                for agent_name, output in previous_outputs.items():
+                    messages.append({
+                        "role": "assistant",
+                        "content": f"[Context from {agent_name}]:\n{output.strip()}"
+                    })
+            messages.append({"role": "user", "content": user_prompt})
+
+            self.logger.info(f"Sending request to LLM for {self.name}")
+            response = self.llm.chat(messages)
+            content = response.choices[0].message.content
+
+            output = self.extract_code_block(content)
+
+            with open(output_path, 'w') as f:
+                f.write(output)
+
+        except Exception as e:
+            self.logger.error(f"{self.name} failed: {str(e)}")
+            raise RuntimeError(f"Agent {self.name} failed: {str(e)}")

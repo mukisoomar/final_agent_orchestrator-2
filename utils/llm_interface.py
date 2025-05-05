@@ -14,7 +14,6 @@ class LLMService:
         self.stop = model_config.get("stop", None)
         self.max_tokens = model_config.get("max_tokens", 1024)
 
-        # Only used with OpenAI models
         self.presence_penalty = model_config.get("presence_penalty", 0.0)
         self.frequency_penalty = model_config.get("frequency_penalty", 0.0)
         self.logit_bias = model_config.get("logit_bias", None)
@@ -47,7 +46,6 @@ class LLMService:
             "max_tokens": self.max_tokens
         }
 
-        # Add OpenAI-specific parameters only for OpenAI
         if self.provider == "openai":
             kwargs.update({
                 "presence_penalty": self.presence_penalty,
@@ -55,6 +53,9 @@ class LLMService:
                 "logit_bias": self.logit_bias,
                 "user": self.user
             })
+
+        # 🚫 Remove all keys with None values
+        kwargs = {k: v for k, v in kwargs.items() if v is not None}
 
         response = self.client.chat.completions.create(**kwargs)
 
