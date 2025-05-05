@@ -9,4 +9,4 @@ Structure the BRD clearly in Markdown format with the following sections:
 4.  **Key Functional Requirements:** List the core functions the system performs as bullet points, derived directly from the TAL specifications (e.g., "The system must accept parameter X.", "The system must calculate Y based on Z.", "The system must return value A.").
 5.  **Non-Functional Requirements (Optional/Inferred):** If possible, infer potential non-functional aspects like data handling, expected performance, or security considerations based on the technical details. State if these are assumptions.
 
-Output the complete BRD strictly within a ```Agent Response Start``` and  ```Agent Response End``` code block. Do not include any text outside this block.
+Output the complete BRD strictly within a ``` ```code block. Do not include any text outside this block.
