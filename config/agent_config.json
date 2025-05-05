@@ -22,5 +22,8 @@
     "top_p": 0.9,
     "n": 1,
     "max_tokens": 1000000
+  },
+  "agent_call_external_service": {
+    "output_file": "external_output.txt"
   }
 }

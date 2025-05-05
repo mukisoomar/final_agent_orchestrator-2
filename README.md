@@ -292,3 +292,63 @@ output/<input_filename>/<agent_name>.txt
 ```
 
 Each agent receives its input from the original file or a previous output, and all context is propagated automatically.
+
+
+---
+
+## 🔌 Extending Agents for Custom Logic
+
+You can create custom agents by subclassing the base `Agent` class. This allows you to run additional logic like calling external APIs, validating results, or preprocessing input data.
+
+### 🧪 Example: Agent with External API Call
+
+File: `agents/agent_call_external_service.py`
+
+```python
+import requests
+from agents.agent import Agent
+
+class AgentCallExternalService(Agent):
+    def run(self, input_path, output_folder, previous_outputs=None):
+        self.logger.info("Calling external service...")
+
+        try:
+            response = requests.get("https://jsonplaceholder.typicode.com/todos/1")
+            response.raise_for_status()
+            data = response.json()
+        except Exception as e:
+            self.logger.error(f"External call failed: {e}")
+            raise RuntimeError("Could not fetch external data")
+
+        # Add external data as context
+        if previous_outputs is None:
+            previous_outputs = {}
+        previous_outputs["external_service"] = f"Todo fetched: {data['title']}"
+
+        # Run the standard LLM agent logic
+        super().run(input_path, output_folder, previous_outputs)
+```
+
+### 🧩 Configuration
+
+#### `config/flow.json`
+```json
+{
+  "agent_call_external_service": []
+}
+```
+
+#### `config/agent_config.json`
+```json
+{
+  "agent_call_external_service": {
+    "output_file": "external_output.txt"
+  }
+}
+```
+
+### 🧠 Use Case
+
+- Pre-fetch knowledge from APIs
+- Query databases or search indexes
+- Combine external reasoning with LLM output
