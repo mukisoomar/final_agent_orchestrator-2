@@ -18,7 +18,8 @@ def run_orchestration(repo_path=None, output_base_path=None):
     for agent_name in flow:
         logger.info(f"Initializing agent: {agent_name}")
         prompt_path = f"prompts/{agent_name}.txt"
-        agents[agent_name] = Agent(agent_name, config={"prompt_path": prompt_path})
+        merged_config = {**default_config.get("model", {}), **agent_configs.get(agent_name, {})}
+        agents[agent_name] = Agent(agent_name, config=merged_config)
 
     initial_agent = list(flow.keys())[0]
 
